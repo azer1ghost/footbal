@@ -12,6 +12,9 @@ class TeamController extends Controller
     public function index()
     {
 //        $this->reGenerate();
+
+//        return Matchmaking::generate(Team::get());
+
         return view('index');
     }
 

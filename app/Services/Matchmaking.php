@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 
 class Matchmaking
 {
-    public static function generate(Collection|array $teams): Collection
+    public static function generate(Collection|array $teams)
     {
         //  $teams = $teams->shuffle();
 
@@ -28,7 +28,9 @@ class Matchmaking
         $countCombinations = count($combinations);
 
         for ($i = 0; $i < $countCombinations / 2; $i++) {
+
             $weeks[] = [$combinations[$i], $combinations[$countCombinations - 1 - $i]];
+
         }
 
         return collect($weeks);

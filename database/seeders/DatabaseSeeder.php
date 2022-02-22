@@ -29,5 +29,13 @@ class DatabaseSeeder extends Seeder
         \App\Models\Team::create([
             'name' => 'Liverpool'
         ]);
+
+//        \App\Models\Team::create([
+//            'name' => 'Manchester'
+//        ]);
+//
+//        \App\Models\Team::create([
+//            'name' => 'Leinchester'
+//        ]);
     }
 }
