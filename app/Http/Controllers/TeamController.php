@@ -12,7 +12,7 @@ class TeamController extends Controller
 {
     public function index()
     {
-//        $this->reGenerate();
+        $this->reGenerate();
         return view('index');
     }
 

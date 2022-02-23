@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static orderBy(string $string)
  * @method static create(string[] $array)
+ * @method static get()
  */
 class Team extends Model
 {

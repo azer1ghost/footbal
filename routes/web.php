@@ -7,6 +7,7 @@ Route::controller(TeamController::class)
     ->group(function (){
         Route::get('/', 'index');
         Route::get('/teams', 'teams');
+        Route::get('/groups', 'groups');
         Route::get('/week/{week}', 'week');
         Route::post('/week/{week}', 'playWeek');
     });
