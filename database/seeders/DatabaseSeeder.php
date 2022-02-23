@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Team;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,28 +14,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         \App\Models\Team::create([
-            'name' => 'Arsenal'
-         ]);
+        $teams = ['Arsenal', 'Chelsea', 'Tottenham', 'Liverpool', 'Manchester City', 'Leicester', 'Manchester United', 'Everton'];
 
-        \App\Models\Team::create([
-            'name' => 'Chelsea'
-        ]);
-
-        \App\Models\Team::create([
-            'name' => 'Tottenham'
-        ]);
-
-        \App\Models\Team::create([
-            'name' => 'Liverpool'
-        ]);
-
-//        \App\Models\Team::create([
-//            'name' => 'Manchester'
-//        ]);
-//
-//        \App\Models\Team::create([
-//            'name' => 'Leinchester'
-//        ]);
+        foreach ($teams as $team){
+            Team::create([
+                'name' => $team
+            ]);
+        }
     }
 }

@@ -18,7 +18,7 @@ function FootballData() {
         getTeams() {
             axios.get('teams')
                 .then((response) => {
-                    this.teams = response.data.sort((a, b) => b.P - a.P || b.GD - a.GD);
+                    this.teams = response.data.sort((a, b) => b.points - a.points || b.gd - a.gd);
                 })
         },
         getWeek(){

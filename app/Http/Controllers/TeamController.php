@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
 use App\Models\Team;
 use App\Models\Week;
 use App\Services\Matchmaking;
@@ -12,9 +13,6 @@ class TeamController extends Controller
     public function index()
     {
 //        $this->reGenerate();
-
-//        return Matchmaking::generate(Team::get());
-
         return view('index');
     }
 
@@ -23,29 +21,55 @@ class TeamController extends Controller
         return Team::get();
     }
 
-    public function week($id)
+    public function groups()
     {
-        return Week::with('games.teams')->find($id);
+        return Group::orderBy('name')->get();
     }
 
-    public function playWeek($id)
+    public function week(Week $week)
     {
-        $this->week($id)->games->each(function ($game){
+        $week->load('games.teams');
+
+        return $week;
+    }
+
+    public function playWeek(Week $week)
+    {
+        $week->games->each(function ($game){
             $game->simulate();
         });
     }
 
     public function reGenerate()
     {
-        $this->saveMatchmaking(
-            Matchmaking::generate(Team::get())
+        $this->makeGroups();
+
+        for ($i = 0; $i < 6; $i++){
+            Week::create();
+        }
+
+        $this->groups()->each(fn ($group) =>
+            $this->saveMatchmaking(
+                Matchmaking::generate($group->teams)
+            )
         );
+    }
+
+    public function makeGroups()
+    {
+        $this->teams()->chunk(4)->each(function ($teams){
+            $group = Group::create();
+            $teams->each(fn ($team) =>
+                $team->group()->associate($group)->save()
+            );
+        });
     }
 
     public function saveMatchmaking(Collection $weeks)
     {
-        $weeks->map(function ($gamesInWeek) {
-            $week = Week::create();
+        $i = 1;
+        $weeks->map(function ($gamesInWeek) use (&$i) {
+            $week = Week::find($i);
             foreach ($gamesInWeek as $game):
                 $week
                     ->games()
@@ -56,6 +80,7 @@ class TeamController extends Controller
                         $game[1]->id => ['is_host' => false]
                     ]);
             endforeach;
+            $i++;
         });
     }
 }

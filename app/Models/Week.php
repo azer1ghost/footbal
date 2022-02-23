@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static create()
+ * @method static find(int $i)
+ * @property HasMany $games
  */
 class Week extends Model
 {

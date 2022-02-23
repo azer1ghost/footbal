@@ -15,25 +15,29 @@
                         <thead>
                             <tr>
                                 <th>Teams</th>
-                                <th>PTS</th>
-                                <th>P</th>
-                                <th>W</th>
-                                <th>D</th>
-                                <th>L</th>
-                                <th>GD</th>
+                                <th>Points</th>
+                                <th>Played</th>
+                                <th>Won</th>
+                                <th>Drawn</th>
+                                <th>Lost</th>
+                                <th title="Golas For">GF</th>
+                                <th title="Goals Against">GA</th>
+                                <th title="Goals Difference">GD</th>
                             </tr>
                         </thead>
                         <tbody>
-{{--                        TODO siralama  // faiz hesabati--}}
+{{--                        TODO faiz hesabati--}}
                             <template x-for="(team, index) in teams" :key="index">
                                 <tr>
                                     <th x-text="team.name"></th>
-                                    <td x-text="team.PTS"></td>
-                                    <td x-text="team.P"></td>
-                                    <td x-text="team.W"></td>
-                                    <td x-text="team.D"></td>
-                                    <td x-text="team.L"></td>
-                                    <td x-text="team.GD"></td>
+                                    <td x-text="team.points"></td>
+                                    <td x-text="team.played"></td>
+                                    <td x-text="team.won"></td>
+                                    <td x-text="team.drawn"></td>
+                                    <td x-text="team.lost"></td>
+                                    <td x-text="team.gf"></td>
+                                    <td x-text="team.ga"></td>
+                                    <td x-text="team.gd"></td>
                                 </tr>
                             </template>
                         </tbody>

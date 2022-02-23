@@ -3,16 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static orderBy(string $string)
+ * @method static create(string[] $array)
+ */
 class Team extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'PTS', 'P', 'W', 'L', 'D', 'GD'];
+    protected $fillable = ['name', 'points', 'played', 'won', 'lost', 'drawn', 'gf', 'ga', 'gd'];
 
     public $timestamps = false;
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class);
+    }
 
     public function games(): BelongsToMany
     {
@@ -35,12 +45,14 @@ class Team extends Model
     public function calculateStats(){
 
         $stats = [
-            'PTS' => $this->playedGames()->count(),
-            'P'   => 0,
-            'W'   => 0,
-            'L'   => 0,
-            'D'   => 0,
-            'GD'  => 0
+            'played' => $this->playedGames()->count(),
+            'points' => 0,
+            'won'    => 0,
+            'lost'   => 0,
+            'drawn'  => 0,
+            'gf'     => 0,
+            'ga'     => 0,
+            'gd'     => 0
         ];
 
         foreach ($this->playedGames as $game){
@@ -50,20 +62,22 @@ class Team extends Model
             $thisGoals = $this->gameResult($game);
 
             if ($thisGoals > $rivalGoals){
-                $stats['W'] ++;
-                $stats['P'] += 3;
+                $stats['won'] ++;
+                $stats['points'] += 3;
             }
 
             if($thisGoals == $rivalGoals){
-                $stats['D'] ++;
-                $stats['P'] += 1;
+                $stats['drawn'] ++;
+                $stats['points'] += 1;
             }
 
             if($thisGoals < $rivalGoals) {
-                $stats['L'] ++;
+                $stats['lost'] ++;
             }
 
-            $stats['GD'] += ($thisGoals - $rivalGoals);
+            $stats['gf'] += $thisGoals;
+            $stats['ga'] += $rivalGoals;
+            $stats['gd'] += ($thisGoals - $rivalGoals);
         }
 
         $this->update($stats);

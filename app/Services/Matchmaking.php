@@ -6,9 +6,9 @@ use Illuminate\Support\Collection;
 
 class Matchmaking
 {
-    public static function generate(Collection|array $teams)
+    public static function generate(Collection|array $teams): Collection
     {
-        //  $teams = $teams->shuffle();
+        $teams = $teams->shuffle();
 
         $combinations = []; $revenge = [];
 

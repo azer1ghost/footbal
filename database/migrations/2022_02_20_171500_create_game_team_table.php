@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('game_team', function (Blueprint $table) {
             $table->foreignId('game_id')->constrained()->cascadeOnDelete();
             $table->foreignId('team_id')->constrained()->cascadeOnDelete();
+            $table->boolean('played')->default(true);
             $table->boolean('is_host')->default(true);
-            $table->boolean('played')->default(false);
             $table->integer('goals')->default(0);
         });
     }
